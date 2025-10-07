@@ -6,14 +6,32 @@ const produtoModel = {
             
             const pool = await getConnection(); // Cria conexão com o BD
 
-            let sql = 'SELECT * FROM Produtos';
+            let querySQL = 'SELECT * FROM Produtos';
 
-            const result = await pool.request().query(sql);
+            const result = await pool.request().query(querySQL);
 
             return result.recordset;
 
         } catch (error) {
             console.error('ERRO ao buscar produtos:',error);
+            throw error; //Passa o erro para o controller tratar 
+        }
+    },
+
+    inserirProduto: async (nomeProduto, precoProduto)=>{
+        try {
+            
+            const pool = await getConnection();
+
+            let querySQL = 'INSERT INTO Produtos(nomeProduto, precoProduto) VALUES(@nomeProduto, @precoProduto)';
+
+            await pool.request()
+            .input('nomeProduto', sql.VarChar(100), nomeProduto)
+            .input('precoProduto', sql.Decimal(10,2), precoProduto)
+            .query(querySQL);
+
+        } catch (error) {
+            console.error('ERRO ao inserir produto:',error);
             throw error; //Passa o erro para o controller tratar 
         }
     }
