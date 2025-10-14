@@ -1,7 +1,7 @@
 <!--API Produtos-->
 
 
-## API Reference
+## API Produtos
 
 ### Produtos
 
@@ -29,15 +29,15 @@
 <!--API Clientes-->
 
 
-## API Reference
+## API Clientes
 
-### Produtos
+### Clientes
 
-#### GET/produtos
+#### GET/clientes
 -**Descrição**: Obtém uma lista de clientes 
 -**Response**: Array de produtos
 
-#### POST/produtos 
+#### POST/clientes 
 -**Descrição**: Cadastra um novo Cliente
 -**Body**: 
 ```
