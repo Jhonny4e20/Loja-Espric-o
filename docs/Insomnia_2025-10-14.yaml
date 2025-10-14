@@ -1,0 +1,151 @@
+type: collection.insomnia.rest/5.0
+name: Loja Espricio
+meta:
+  id: wrk_b48997cd5fc34672a7e841a719ecc2fe
+  created: 1759862600414
+  modified: 1759862600414
+  description: ""
+collection:
+  - name: Produtos
+    meta:
+      id: fld_3bf51e3105ef4be7ba440cf1f2ea9cb1
+      created: 1760454985969
+      modified: 1760455000028
+      sortKey: -1760454990696
+      description: ""
+    children:
+      - url: localhost:8081/produtos
+        name: Listar Produtos
+        meta:
+          id: req_c29efeebafa7497982d2081f6fd8c167
+          created: 1760455006252
+          modified: 1760455250501
+          isPrivate: false
+          description: ""
+          sortKey: -1760455006252
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8081/produtos
+        name: Cadastrar Produtos
+        meta:
+          id: req_924a816f83874a0a9a6cf3abd62dc92d
+          created: 1760455031433
+          modified: 1760455178391
+          isPrivate: false
+          description: ""
+          sortKey: -1760455031433
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+            	"nomeProduto": "Molho de Tomate",
+            	"precoProduto": 9.50
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Clientes
+    meta:
+      id: fld_beebafbb5e1e41a8ada7fddbd58cd9c2
+      created: 1760455292883
+      modified: 1760455292883
+      sortKey: -1760455292883
+      description: ""
+    children:
+      - url: localhost:8081/clientes
+        name: Listar Clientes
+        meta:
+          id: req_fcfeae2405c34b91b7adb8351fe69ba0
+          created: 1760455296599
+          modified: 1760455487102
+          isPrivate: false
+          description: ""
+          sortKey: -1760455296599
+        method: GET
+        body:
+          mimeType: multipart/form-data
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: localhost:8081/clientes
+        name: Cadastrar Clientes
+        meta:
+          id: req_667735cd1a7c407fb2dd6f639d7daf19
+          created: 1760455299704
+          modified: 1760455358281
+          isPrivate: false
+          description: ""
+          sortKey: -1760455299704
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+            	"nomeCliente": "João Pedro Barbosa Kovalski",
+            	"cpfCliente": "49216747870"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.6.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_aa9fec2992106c4763becadfca9557c789edb8cd
+    created: 1759862600455
+    modified: 1759862600455
+environments:
+  name: Base Environment
+  meta:
+    id: env_aa9fec2992106c4763becadfca9557c789edb8cd
+    created: 1759862600450
+    modified: 1759862600450
+    isPrivate: false
