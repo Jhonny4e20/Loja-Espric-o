@@ -28,24 +28,54 @@ const clienteModel = {
         }
     },
 
-    buscarCPF: async (cpfCliente) => {
+    buscarUm: async (idCliente) => {
         try {
-            
             const pool = await getConnection();
 
-            const querySQL = 'SELECT * FROM clientes WHERE cpfCliente = @cpfCliente;';
+            const querySQL = `SELECT * FROM clientes WHERE idCliente = @idCliente`;
 
-            const result = await pool.request()
-                .input('cpfCliente', sql.Char(14), cpfCliente)
+            const result = await pool
+                .request()
+                .input(`idCliente`, sql.UniqueIdentifier, idCliente)
                 .query(querySQL);
 
+            return result.recordset
+
+        } catch (error) {
+            console.error(`ERRO ao buscar o cliente:`, error);
+            throw error;
+        }
+    },
+
+   // Função assíncrona para buscar um cliente específico pelo CPF
+    buscarCPF: async (cpfCliente) => {
+        try {
+            // Cria (ou obtém) uma conexão ativa com o banco de dados
+            const pool = await getConnection();
+
+            // Define a consulta SQL com parâmetro para evitar SQL Injection
+            const querySQL = 'SELECT * FROM clientes WHERE cpfCliente = @cpfCliente;';
+
+            // Monta e executa a requisição SQL
+            const result = await pool.request()
+
+                // Define o parâmetro @cpfCliente como um CHAR(14)
+                // O uso de .input() ajuda a proteger contra injeção de código SQL
+                .input('cpfCliente', sql.Char(14), cpfCliente)
+
+                // Executa a consulta no banco
+                .query(querySQL);
+
+            // Retorna o resultado da consulta (array com o(s) cliente(s) encontrado(s))
             return result.recordset;
 
         } catch (error) {
+            // Caso ocorra qualquer erro na consulta, exibe no console e repassa o erro
             console.error('ERRO ao buscar clientes:', error);
-            throw error; // Passa o erro para o CONTROLLER tratar
+            throw error; // Passa o erro para o CONTROLLER tratar (quem chamou a função)
         }
     },
+
 
     // Função assíncrona para inserir um novo cliente no banco de dados
     inserirCliente: async (nomeCliente, cpfCliente) => {

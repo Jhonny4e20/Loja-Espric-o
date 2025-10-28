@@ -24,7 +24,29 @@
     "message": "Produto cadastrado com sucesso!"
 }
 ```
-
+#### DELETE/produtos
+-**Descrição**: Deleta um produto já existente
+-**Response**:
+```
+{
+    "message": "Produto deletado com sucesso!"
+}
+```
+#### PUT/produtos
+-**Descrição**: Atualiza um produto já existente
+-**Body**:
+```
+{
+    "nomeProduto": "produto exemplo atualizado".
+    "precoProduto": 0.00
+}
+```
+-**Response**:
+```
+{
+    "message": "Produto atualizado com sucesso!"
+}
+```
 
 <!--API Clientes-->
 
