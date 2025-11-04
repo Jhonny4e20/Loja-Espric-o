@@ -37,6 +37,25 @@ const pedidoModel = {
         }
     },
 
+    buscarUm: async (idPedido) => {
+        try {
+
+            const pool = await getConnection();
+
+            const querySQL = "SELECT * FROM Pedidos WHERE idPedido = @idPedido";
+
+            const result = await pool.request()
+                .input("idPedido", sql.UniqueIdentifier, idPedido)
+                .query(querySQL);
+
+                return result.recordset;
+            
+        } catch (error) {
+            console.error("ERRO ao buscar pedidos:", error);
+            throw error;
+        }
+    },
+
     inserirPedido: async (idCliente, dataPedido, statusPagamento, {itens}) => {
         // {itens} realiza a desestruturação do objeto itens
 
@@ -78,6 +97,63 @@ const pedidoModel = {
         } catch (error) {
             await transaction.rollback(); //Defaz tudo quase de erro
             console.error("ERRO ao inserir pedido:", error);
+            throw error;
+        }
+    },
+
+    atualizarPedido: async (idPedido, idCliente, dataPedido, statusPagamento) => {
+        try {
+            
+            const pool = await getConnection();
+
+            const querySQL = `
+                UPDATE Pedidos
+                SET idCliente = @idCliente,
+                    dataPedido = @dataPedido,
+                    statusPagamento = @statusPagamento 
+                WHERE idPedido = @idPedido           
+            `
+            await pool.request()
+                .input("idCliente", sql.UniqueIdentifier, idCliente)
+                .input("dataPedido", sql.Date, dataPedido)
+                .input("statusPagamento", sql.Bit, statusPagamento)
+                .input("idPedido", sql.UniqueIdentifier, idPedido)
+                .query(querySQL);
+
+        } catch (error) {
+            console.error("ERRO ao atualizar pedido:", error);
+            throw error;
+        }
+    },
+
+    deletarPedido: async (idPedido) => {
+        const pool = await getConnection();
+        const transaction = new sql.Transaction(pool);
+        await transaction.begin();
+        
+        try {
+            
+            let querySQL = `
+                DELETE FROM ItemPedido
+                WHERE idPedido = @idPedido
+            `
+            await transaction.request()
+                .input("idPedido", sql.UniqueIdentifier, idPedido)
+                .query(querySQL);
+
+            querySQL = `
+                DELETE FROM Pedidos
+                WHERE idPedido = @idPedido    
+            `
+            await transaction.request()
+                .input("idPedido", sql.UniqueIdentifier, idPedido)
+                .query(querySQL);
+
+            await transaction.commit();
+
+        } catch (error) {
+            await transaction.rollback();
+            console.error("ERRO ao deletar pedido:", error);
             throw error;
         }
     }
